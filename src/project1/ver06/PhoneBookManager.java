@@ -1,8 +1,9 @@
-package project1.ver05;
+package project1.ver06;
+
 
 import java.util.Scanner;
 
-import project1.ver05.PhoneBookManager;
+import project1.ver06.PhoneBookManager;
 
 public class PhoneBookManager {
 	
