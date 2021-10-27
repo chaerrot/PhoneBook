@@ -11,13 +11,13 @@ import project1.ver05.PhoneInfo;
 import project1.ver06.MenuSelectException;
 import project1.ver05.MenuItem;
 
-public class PhoneBookVer06 
+public class PhoneBookVer07 
 {
 	public static void main(String[] args)
 	{
 		Scanner scan = new Scanner(System.in);
 		
-		project1.ver06.PhoneBookManager handler = new project1.ver06.PhoneBookManager(100);
+		project1.ver07.PhoneBookManager handler = new project1.ver07.PhoneBookManager(100);
 		
 			while(true) {
 				try {

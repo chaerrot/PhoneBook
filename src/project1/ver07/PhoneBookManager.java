@@ -1,11 +1,61 @@
-package project1.ver06;
+package project1.ver07;
 
-
+import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Scanner;
 
-import project1.ver06.PhoneBookManager;
-
 public class PhoneBookManager {
+	
+	private static PhoneBookManager pbm;
+	private HashSet<PhoneInfo> set;
+	private Iterator<PhoneInfo> itr;
+	
+	private PhoneBookManager()
+	{
+		set = new HashSet<PhoneInfo>();
+	}
+	
+	public static PhoneBookManager getPhoneBookManager() {
+		if (pbm==null) {
+			pbm = new PhoneBookManager();
+		}
+		return pbm;
+	}
+	
+	public boolean insertPhoneInfo (PhoneInfo phoneInfo) {
+		return set.add(phoneInfo);
+	}
+	
+	public boolean searchPhoneInfo(String name) {
+		PhoneInfo PInfo = null;
+		itr = set.iterator();
+		boolean result = false;
+		
+		while (itr.hasNext()) {
+			PInfo = itr.next();
+			if(PInfo.getName().equals(name)) {
+				PInfo.showPhoneInfo();
+				result = true;
+			}
+		}
+		return result;
+	}
+	
+	public boolean deletePhoneInfo(String phoneNumber) {
+		PhoneInfo PInfo = null;
+		itr = set.iterator();
+		
+		while (itr.hasNext()) {
+			PInfo = itr.next();
+			if (PInfo.getPhoneNumber().equals(phoneNumber)) {
+				itr.remove();
+				return true;
+			}
+		}
+		return false;
+	}
+ 	
+	
 	
 	public PhoneInfo[] myPhoneInfo;
 	private int numOfPhoneInfo;
@@ -35,6 +85,8 @@ public class PhoneBookManager {
 		System.out.println("1. 일반, 2. 동창, 3. 회사");
 		System.out.print("선택>> ");
 		int choice2 = scan.nextInt();
+		boolean result;
+		PhoneInfo phoneInfo = null;
 		
 		switch (choice2) {
 		case SubMenuItem.GENERAL:
@@ -51,6 +103,16 @@ public class PhoneBookManager {
 			dataInputCompany();
 			break;
 		}
+		
+		result = pbm.insertPhoneInfo(phoneInfo);
+		if (result==false) {
+			System.out.println("이미 등록된 데이터입니다.");
+		}
+		else {
+			System.out.println("데이터 입력이 완료되었습니다.");
+		}
+		
+		
 	}
 		
 	public void dataInputGeneral() {
@@ -137,8 +199,12 @@ public class PhoneBookManager {
 	}
 	
 	public void dataAllShow() { 
-		for (int i=0; i<numOfPhoneInfo; i++) {
-			myPhoneInfo[i].showPhoneInfo();
+//		for (int i=0; i<numOfPhoneInfo; i++) {
+//			myPhoneInfo[i].showPhoneInfo();
+//		}
+		itr = set.iterator();
+		while (itr.hasNext()) {
+			itr.next().showPhoneInfo();
 		}
 		System.out.println("주소록 전체가 출력되었습니다.");
 	}
