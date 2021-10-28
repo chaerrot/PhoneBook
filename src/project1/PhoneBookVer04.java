@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import project1.ver03.PhoneBookManager;
-import project1.ver03.PhoneInfo;
+import project1.ver04.PhoneBookManager;
+import project1.ver04.PhoneInfo;
 
 public class PhoneBookVer04
 {
