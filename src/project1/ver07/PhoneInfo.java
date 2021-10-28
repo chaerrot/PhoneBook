@@ -1,5 +1,6 @@
 package project1.ver07;
 
+import java.util.Objects;
 import java.util.Scanner;
 
 public class PhoneInfo
@@ -35,16 +36,23 @@ public class PhoneInfo
 		System.out.println("전화번호: "+ phoneNumber);
 	}
 	
+	
 	@Override
 	public boolean equals(Object obj)
 	{
-		return phoneNumber.equals(((PhoneInfo)obj).phoneNumber);
+		PhoneInfo pInfo = (PhoneInfo)obj;
+		if (pInfo.name.equals(this.name)) {
+			return true;
+		}
+		else {
+			return false;
+		}
+		
 	}
 	
 	@Override
 	public int hashCode()
 	{
-		return super.hashCode();
+		return name.hashCode();
 	}
-	
 }

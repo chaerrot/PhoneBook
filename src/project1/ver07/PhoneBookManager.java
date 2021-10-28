@@ -6,62 +6,18 @@ import java.util.Scanner;
 
 public class PhoneBookManager {
 	
-	private static PhoneBookManager pbm;
-	private HashSet<PhoneInfo> set;
-	private Iterator<PhoneInfo> itr;
+	Scanner scan = new Scanner(System.in);
+	HashSet<PhoneInfo> set = new HashSet<PhoneInfo>();
 	
-	private PhoneBookManager()
-	{
-		set = new HashSet<PhoneInfo>();
-	}
-	
-	public static PhoneBookManager getPhoneBookManager() {
-		if (pbm==null) {
-			pbm = new PhoneBookManager();
-		}
-		return pbm;
-	}
-	
-	public boolean insertPhoneInfo (PhoneInfo phoneInfo) {
-		return set.add(phoneInfo);
-	}
-	
-	public boolean searchPhoneInfo(String name) {
-		PhoneInfo PInfo = null;
-		itr = set.iterator();
-		boolean result = false;
-		
-		while (itr.hasNext()) {
-			PInfo = itr.next();
-			if(PInfo.getName().equals(name)) {
-				PInfo.showPhoneInfo();
-				result = true;
-			}
-		}
-		return result;
-	}
-	
-	public boolean deletePhoneInfo(String phoneNumber) {
-		PhoneInfo PInfo = null;
-		itr = set.iterator();
-		
-		while (itr.hasNext()) {
-			PInfo = itr.next();
-			if (PInfo.getPhoneNumber().equals(phoneNumber)) {
-				itr.remove();
-				return true;
-			}
-		}
-		return false;
-	}
- 	
-	
+	Iterator<PhoneInfo> itr = set.iterator();
 	
 	public PhoneInfo[] myPhoneInfo;
-	private int numOfPhoneInfo;
+	//private int numOfPhoneInfo;
 	
-	String name, phoneNumber, major, grade, companyName;
-	Scanner scan = new Scanner(System.in);
+	public PhoneBookManager (int num) {
+		myPhoneInfo = new PhoneInfo[100];
+		//numOfPhoneInfo = 0;
+	}
 	
 	public static void printMenu()
 	{
@@ -74,84 +30,72 @@ public class PhoneBookManager {
 		System.out.print("선택: ");		
 	}
 	
-	public PhoneBookManager (int num) {
-		myPhoneInfo = new PhoneInfo[100];
-		numOfPhoneInfo = 0;
-	}
-	
 	public void dataInput()
 	{
+		String name, phoneNumber, major, companyName;
+		int grade;
+		
 		System.out.println("데이터 입력을 시작합니다..");
 		System.out.println("1. 일반, 2. 동창, 3. 회사");
 		System.out.print("선택>> ");
 		int choice2 = scan.nextInt();
-		boolean result;
+		scan.nextLine();
+		
+		System.out.print("이름: ");
+		name = scan.nextLine();
+		System.out.print("전화번호: ");
+		phoneNumber = scan.nextLine();
+		
 		PhoneInfo phoneInfo = null;
+		boolean hashCheck = false;
 		
 		switch (choice2) {
 		case SubMenuItem.GENERAL:
 			//System.out.println("1. 일반: ");
-			dataInputGeneral();
+			phoneInfo = new PhoneInfo(name, phoneNumber);
+			
+			hashCheck = set.add(phoneInfo);
 			break;
 			
 		case SubMenuItem.SCHOOL:
 			//System.out.println("2. 동창: ");
-			dataInputSchool();
+			System.out.print("전공: ");
+			major = scan.nextLine();
+			System.out.print("학년: ");
+			grade = scan.nextInt();
+			phoneInfo = new PhoneSchoolInfo(name, phoneNumber, major, grade);
+			
+			hashCheck = set.add(phoneInfo);
 			break;
 		case SubMenuItem.COMPANY:
 			//System.out.println("3. 회사: ");
-			dataInputCompany();
+			System.out.print("회사: ");
+			companyName = scan.nextLine();
+			phoneInfo = new PhoneCompanyInfo(name, phoneNumber, companyName);
+			
+			hashCheck = set.add(phoneInfo);
 			break;
 		}
-		
-		result = pbm.insertPhoneInfo(phoneInfo);
-		if (result==false) {
-			System.out.println("이미 등록된 데이터입니다.");
+		if (hashCheck==false) {
+			System.out.println(name +"은 이미 저장된 데이터입니다.");
+			System.out.println("덮어쓸까요? Y(y)/ N(n)");
+			String ans = scan.nextLine();
+			
+			if (ans.equalsIgnoreCase("Y")) {
+				set.remove(phoneInfo);
+				set.add(phoneInfo);
+				System.out.println("입력한 정보가 저장되었습니다.");
+			}
+			else if (ans.equalsIgnoreCase("N")) {
+				System.out.println("아무 데이터도 저장되지 않았습니다.");
+			}
+			else {
+				System.out.println("Y(y)/ N(n)으로만 입력하세요.");
+			}
 		}
-		else {
+		else if (hashCheck==true) {
 			System.out.println("데이터 입력이 완료되었습니다.");
 		}
-		
-		
-	}
-		
-	public void dataInputGeneral() {
-		Scanner scan = new Scanner(System.in);
-		System.out.print("이름: ");
-		String name = scan.nextLine();
-		System.out.print("전화번호: ");
-		String phoneNumber = scan.nextLine();
-		myPhoneInfo[numOfPhoneInfo++] = new PhoneInfo(name, phoneNumber);
-		
-		System.out.println("데이터 입력이 완료되었습니다.");
-	}
-	
-	public void dataInputSchool() {
-		Scanner scan = new Scanner(System.in);
-		System.out.print("이름: ");
-		String name = scan.nextLine();
-		System.out.print("전화번호: ");
-		String phoneNumber = scan.nextLine();
-		System.out.print("전공: ");
-		String major = scan.nextLine();
-		System.out.print("학년: ");
-		int grade = scan.nextInt();
-		
-		myPhoneInfo[numOfPhoneInfo++] = new PhoneSchoolInfo(name, phoneNumber, major, grade);
-		System.out.println("데이터 입력이 완료되었습니다.");
-	}
-	
-	public void dataInputCompany() {
-		Scanner scan = new Scanner(System.in);
-		System.out.print("이름: ");
-		String name = scan.nextLine();
-		System.out.print("전화번호: ");
-		String phoneNumber = scan.nextLine();
-		System.out.print("회사: ");
-		String companyName = scan.nextLine();
-		
-		myPhoneInfo[numOfPhoneInfo++] = new PhoneCompanyInfo(name, phoneNumber, companyName);
-		System.out.println("데이터 입력이 완료되었습니다.");
 	}
 	
 	public void dataSearch() {
@@ -161,9 +105,12 @@ public class PhoneBookManager {
 		System.out.print("이름: ");
 		String searchName = scan.nextLine();
 		
-		for (int i=0; i<numOfPhoneInfo; i++) {
-			if (searchName.compareTo(myPhoneInfo[i].name)==0) {
-				myPhoneInfo[i].showPhoneInfo();
+		Iterator<PhoneInfo> itr = set.iterator();
+		while (itr.hasNext()) {
+			PhoneInfo pInfo = itr.next();
+			
+			if (searchName.equals(pInfo.name)) {
+				pInfo.showPhoneInfo();
 				System.out.println("데이터 검색이 완료되었습니다.");
 				isFind = true; 
 			}
@@ -180,14 +127,13 @@ public class PhoneBookManager {
 		String deleteName = scan.nextLine();
 		int deleteIndex = -1;
 		
-		for (int i=0; i<numOfPhoneInfo; i++) {
-			if (deleteName.compareTo(myPhoneInfo[i].name)==0) {
-				for (int j=i; j<numOfPhoneInfo-1; j++) {
-					myPhoneInfo[j] = myPhoneInfo[j+1];
-				}
-				deleteIndex = i;
-				numOfPhoneInfo--;
-				break;
+		Iterator<PhoneInfo> itr = set.iterator();
+		while (itr.hasNext()) {
+			PhoneInfo pInfo = itr.next();
+			
+			if(deleteName.equals(pInfo.name)) {
+				itr.remove();
+				deleteIndex =1;
 			}
 		}
 		if (deleteIndex== -1) {
@@ -199,10 +145,8 @@ public class PhoneBookManager {
 	}
 	
 	public void dataAllShow() { 
-//		for (int i=0; i<numOfPhoneInfo; i++) {
-//			myPhoneInfo[i].showPhoneInfo();
-//		}
-		itr = set.iterator();
+		Iterator<PhoneInfo> itr = set.iterator();
+		
 		while (itr.hasNext()) {
 			itr.next().showPhoneInfo();
 		}

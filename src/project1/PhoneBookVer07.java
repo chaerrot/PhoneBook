@@ -1,15 +1,13 @@
 package project1;
 
-
-import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Iterator;
 import java.util.Scanner;
 
-import project1.ver05.PhoneBookManager;
-import project1.ver05.PhoneInfo;
-import project1.ver06.MenuSelectException;
-import project1.ver05.MenuItem;
+import project1.ver07.PhoneBookManager;
+import project1.ver07.PhoneInfo;
+import project1.ver07.MenuSelectException;
+import project1.ver07.MenuItem;
 
 public class PhoneBookVer07 
 {
@@ -28,8 +26,11 @@ public class PhoneBookVer07
 				if (choice < 1 || choice > 5)
 					throw new MenuSelectException(choice);
 				
+				//scan.nextLine();
+				
 				switch (choice) {
 					case MenuItem.DATA_INPUT:
+						scan.nextLine();
 						//System.out.println("1. 데이터 입력: ");
 						handler.dataInput();
 						break;
