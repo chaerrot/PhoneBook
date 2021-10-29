@@ -19,7 +19,7 @@ create sequence seq_phonebook
     nocycle
     nocache;
 
-select * from seq_phonebook;
+select * from user_sequences;
 
 commit;
 
