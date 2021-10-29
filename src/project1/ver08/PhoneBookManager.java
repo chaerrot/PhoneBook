@@ -28,8 +28,6 @@ public class PhoneBookManager {
 	
 	public static void printMenu()
 	{
-		//loadData();
-		
 		System.out.println("====================메뉴를 선택하세요!====================");
 		System.out.print("1. 주소록입력 ");
 		System.out.print("2. 검색 ");

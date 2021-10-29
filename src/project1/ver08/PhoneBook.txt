@@ -1,0 +1,4 @@
+project1.ver08.PhoneSchoolInfo@640
+project1.ver08.PhoneInfo@6a0
+project1.ver08.PhoneCompanyInfo@660
+project1.ver08.PhoneInfo@720
