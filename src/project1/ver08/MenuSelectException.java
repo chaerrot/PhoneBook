@@ -5,7 +5,6 @@ public class MenuSelectException extends Exception
 	private int choice;
 	public MenuSelectException(int choice)
 	{
-		super("1~5번 중 선택해주세요.");
 		this.choice = choice;
 	}
 	public void showWrongMenu() {

@@ -37,7 +37,6 @@ public class PhoneInfo implements Serializable
 		System.out.print(", "+ "전화번호: "+ phoneNumber);
 	}
 	
-	
 	@Override
 	public boolean equals(Object obj)
 	{
@@ -48,9 +47,7 @@ public class PhoneInfo implements Serializable
 		else {
 			return false;
 		}
-		
 	}
-	
 	@Override
 	public int hashCode()
 	{
